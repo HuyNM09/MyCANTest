@@ -14,6 +14,7 @@ using Peak.Can.Basic;
 using TPCANHandle = System.UInt16;
 using TPCANBitrateFD = System.String;
 using TPCANTimestampFD = System.UInt64;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ICDIBasic
 {
@@ -750,11 +751,71 @@ namespace ICDIBasic
             // Initializes Form's component
             //
             InitializeComponent();
+            // Set window to full screen
+            this.WindowState = FormWindowState.Maximized;
+
+            CreateGroupBox();
+            // Thêm dòng đầu tiên
+            AddMessageRow();
+
             // Initializes specific components
             //
             InitializeBasicComponents();
         }
+        private Button AddMsgBtn;
+        private List<CanSendMessageRow> messageRows = new List<CanSendMessageRow>();
+        private int nextY = 20;
+        private System.Windows.Forms.GroupBox groupBoxSentMsgHUY;
 
+        private void CreateGroupBox()
+        {
+            groupBoxSentMsgHUY = new GroupBox
+            {
+                Text = "Sent message",
+                Location = new Point(10, 216),
+                Size = new Size(630, 428),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+            };
+            this.Controls.Add(groupBoxSentMsgHUY);
+
+            AddMsgBtn = new Button
+            {
+                Text = "Add Message",
+                Location = new Point(50, 216),
+                Size = new Size(100, 30)
+            };
+            AddMsgBtn.Click += (s, e) => AddMessageRow();
+            groupBoxSentMsgHUY.Controls.Add(AddMsgBtn);
+        }
+
+        private void AddMessageRow()
+        {
+            var row = new CanSendMessageRow(new Point(10, nextY));
+            row.OnSendClicked += ShowHexMessage;
+            row.OnDeleteRequested += DeleteMessageRow; // NEW
+            groupBoxSentMsgHUY.Controls.Add(row.Container);
+            messageRows.Add(row);
+            nextY += 35;
+        }
+        private void DeleteMessageRow(CanSendMessageRow row)
+        {
+            groupBoxSentMsgHUY.Controls.Remove(row.Container);
+            messageRows.Remove(row);
+
+            // Re-layout lại các dòng còn lại
+            nextY = 20;
+            foreach (var r in messageRows)
+            {
+                r.Container.Location = new Point(10, nextY);
+                nextY += 35;
+            }
+        }
+
+        private void ShowHexMessage(List<byte> data)
+        {
+            string hex = BitConverter.ToString(data.ToArray());
+            MessageBox.Show($"Sending CAN Data: {hex}");
+        }
         /// <summary>
         /// Form-Closing Function / Finish function
         /// </summary>
@@ -1970,6 +2031,29 @@ namespace ICDIBasic
                     txtbCurrentTextBox = (TextBox)this.Controls.Find("txtData" + i.ToString(), true)[0];
             }
         }
+
+        //===========================Sent CAN message========================
+        //List<CanSendMessageRow> messageRows = new List<CanSendMessageRow>();
+        //int messageRowSpacing = 35;
+
+        //private void btnAddMessage_Click(object sender, EventArgs e)
+        //{
+        //    var msgRow = new CanSendMessageRow();
+        //    Panel rowPanel = msgRow.GetRowPanel();
+        //    rowPanel.Top = messageRows.Count * messageRowSpacing;
+        //    panelMessages.Controls.Add(rowPanel);
+        //    msgRow.BtnSend.Click += (s, args) => SendCanMessage(msgRow);
+        //    messageRows.Add(msgRow);
+        //}
+        //private void btnSendMesage_Click(object sender, EventArgs e)
+        //{
+        //    foreach (var row in messageRows)
+        //    {
+        //        SendCanMessage(row);
+        //    }
+        //}
+
+
         #endregion        
         #endregion        
         #endregion        

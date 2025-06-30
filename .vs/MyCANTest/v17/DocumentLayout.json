@@ -1,17 +1,25 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\17_Project\\02_MyCANTest\\C#_PCAN_Basic\\",
+  "WorkspaceRootPath": "D:\\17_Project\\MyCANTest\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|PCANBasicExample.csproj|d:\\17_project\\02_mycantest\\c#_pcan_basic\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|PCANBasicExample.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:2:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|MyCANTest.csproj|d:\\17_project\\mycantest\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:2:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|MyCANTest.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|PCANBasicExample.csproj|d:\\17_project\\02_mycantest\\c#_pcan_basic\\pcanbasic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|PCANBasicExample.csproj|solutionrelative:pcanbasic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|MyCANTest.csproj|d:\\17_project\\mycantest\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|MyCANTest.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|PCANBasicExample.csproj|D:\\17_Project\\02_MyCANTest\\C#_PCAN_Basic\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|MyCANTest.csproj|D:\\17_Project\\MyCANTest\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|MyCANTest.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|MyCANTest.csproj|D:\\17_Project\\MyCANTest\\pcanbasic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|MyCANTest.csproj|solutionrelative:pcanbasic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|PCANBasicExample.csproj|D:\\17_Project\\MyCANTest\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{0CBCC19A-D35C-493D-A04C-DE1AA7E31F0D}|PCANBasicExample.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -21,51 +29,75 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 269,
+          "DockedWidth": 282,
           "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "D:\\17_Project\\02_MyCANTest\\C#_PCAN_Basic\\Form1.cs",
+              "DocumentMoniker": "D:\\17_Project\\MyCANTest\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\17_Project\\02_MyCANTest\\C#_PCAN_Basic\\Form1.cs [Design]",
-              "RelativeToolTip": "Form1.cs [Design]",
+              "RelativeToolTip": "..\\02_MyCANTest\\C#_PCAN_Basic\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-28T04:42:24.117Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-06-28T04:42:24.117Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "D:\\17_Project\\02_MyCANTest\\C#_PCAN_Basic\\Form1.cs",
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "D:\\17_Project\\MyCANTest\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "D:\\17_Project\\02_MyCANTest\\C#_PCAN_Basic\\Form1.cs",
-              "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAQwO4AAAAIAAAAAAAAAA==",
+              "ToolTip": "D:\\17_Project\\MyCANTest\\Form1.cs [Design]*",
+              "RelativeToolTip": "Form1.cs [Design]*",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-28T04:40:11.688Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T16:08:01.944Z",
+              "EditorCaption": " [Design]"
             }
           ]
         },
         {
-          "DockedWidth": 131,
-          "SelectedChildIndex": 0,
+          "DockedWidth": 118,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "PCANBasic.cs",
-              "DocumentMoniker": "D:\\17_Project\\02_MyCANTest\\C#_PCAN_Basic\\PCANBasic.cs",
+              "DocumentMoniker": "D:\\17_Project\\MyCANTest\\PCANBasic.cs",
               "RelativeDocumentMoniker": "PCANBasic.cs",
-              "ToolTip": "D:\\17_Project\\02_MyCANTest\\C#_PCAN_Basic\\PCANBasic.cs",
+              "ToolTip": "D:\\17_Project\\MyCANTest\\PCANBasic.cs",
               "RelativeToolTip": "PCANBasic.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAqwBwAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAgwJ4CAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-28T04:42:01.318Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "D:\\17_Project\\MyCANTest\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "D:\\17_Project\\MyCANTest\\Form1.cs*",
+              "RelativeToolTip": "Form1.cs*",
+              "ViewState": "AgIAABMEAAAAAAAAAAAQwB4EAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-28T04:40:11.688Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "D:\\17_Project\\MyCANTest\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "Form1.Designer.cs",
+              "ToolTip": "D:\\17_Project\\MyCANTest\\Form1.Designer.cs*",
+              "RelativeToolTip": "Form1.Designer.cs*",
+              "ViewState": "AgIAADEDAAAAAAAAAAAgwDYDAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T16:12:28.151Z",
               "EditorCaption": ""
             }
           ]

@@ -8,3 +8,13 @@ D:\17_Project\02_MyCANTest\C#_PCAN_Basic\obj\Debug\MyCANTest.csproj.GenerateReso
 D:\17_Project\02_MyCANTest\C#_PCAN_Basic\obj\Debug\MyCANTest.csproj.CoreCompileInputs.cache
 D:\17_Project\02_MyCANTest\C#_PCAN_Basic\obj\Debug\PCANBasicExample.exe
 D:\17_Project\02_MyCANTest\C#_PCAN_Basic\obj\Debug\PCANBasicExample.pdb
+D:\17_Project\MyCANTest\obj\Debug\MyCANTest.csproj.AssemblyReference.cache
+D:\17_Project\MyCANTest\obj\Debug\ICDIBasic.Form1.resources
+D:\17_Project\MyCANTest\obj\Debug\PCANBasicExample.Properties.Resources.resources
+D:\17_Project\MyCANTest\obj\Debug\MyCANTest.csproj.GenerateResource.cache
+D:\17_Project\MyCANTest\obj\Debug\MyCANTest.csproj.CoreCompileInputs.cache
+D:\17_Project\MyCANTest\obj\Debug\PCANBasicExample.exe
+D:\17_Project\MyCANTest\obj\Debug\PCANBasicExample.pdb
+D:\17_Project\MyCANTest\bin\Debug (Any CPU)\PCANBasicExample.exe.config
+D:\17_Project\MyCANTest\bin\Debug (Any CPU)\PCANBasicExample.exe
+D:\17_Project\MyCANTest\bin\Debug (Any CPU)\PCANBasicExample.pdb
