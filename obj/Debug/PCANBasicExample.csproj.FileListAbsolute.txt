@@ -1,0 +1,10 @@
+C:\Users\huyst\Downloads\C#_PCAN_Basic\bin\Debug (Any CPU)\PCANBasicExample.exe.config
+C:\Users\huyst\Downloads\C#_PCAN_Basic\bin\Debug (Any CPU)\PCANBasicExample.exe
+C:\Users\huyst\Downloads\C#_PCAN_Basic\bin\Debug (Any CPU)\PCANBasicExample.pdb
+C:\Users\huyst\Downloads\C#_PCAN_Basic\obj\Debug\PCANBasicExample.csproj.AssemblyReference.cache
+C:\Users\huyst\Downloads\C#_PCAN_Basic\obj\Debug\ICDIBasic.Form1.resources
+C:\Users\huyst\Downloads\C#_PCAN_Basic\obj\Debug\PCANBasicExample.Properties.Resources.resources
+C:\Users\huyst\Downloads\C#_PCAN_Basic\obj\Debug\PCANBasicExample.csproj.GenerateResource.cache
+C:\Users\huyst\Downloads\C#_PCAN_Basic\obj\Debug\PCANBasicExample.csproj.CoreCompileInputs.cache
+C:\Users\huyst\Downloads\C#_PCAN_Basic\obj\Debug\PCANBasicExample.exe
+C:\Users\huyst\Downloads\C#_PCAN_Basic\obj\Debug\PCANBasicExample.pdb
