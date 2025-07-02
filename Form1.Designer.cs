@@ -167,7 +167,13 @@
             this.nudLength = new System.Windows.Forms.NumericUpDown();
             this.tmrRead = new System.Windows.Forms.Timer(this.components);
             this.tmrDisplay = new System.Windows.Forms.Timer(this.components);
-            //this.groupBoxSentMsgHUY = new System.Windows.Forms.GroupBox();
+            this.listViewTestCases = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudIdTo)).BeginInit();
@@ -2071,20 +2077,37 @@
             // 
             this.tmrDisplay.Tick += new System.EventHandler(this.tmrDisplay_Tick);
             // 
-            // groupBoxSentMsgHUY
+            // listViewTestCases
             // 
-            //this.groupBoxSentMsgHUY.Location = new System.Drawing.Point(5, 217);
-            //this.groupBoxSentMsgHUY.Name = "groupBoxSentMsgHUY";
-            //this.groupBoxSentMsgHUY.Size = new System.Drawing.Size(200, 100);
-            //this.groupBoxSentMsgHUY.TabIndex = 0;
-            //this.groupBoxSentMsgHUY.TabStop = false;
+            this.listViewTestCases.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listViewTestCases.FullRowSelect = true;
+            this.listViewTestCases.HideSelection = false;
+            this.listViewTestCases.Location = new System.Drawing.Point(35, 234);
+            this.listViewTestCases.MultiSelect = false;
+            this.listViewTestCases.Name = "listViewTestCases";
+            this.listViewTestCases.Size = new System.Drawing.Size(179, 344);
+            this.listViewTestCases.TabIndex = 52;
+            this.listViewTestCases.UseCompatibleStateImageBehavior = false;
+            this.listViewTestCases.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "No.";
+            this.columnHeader1.Width = 40;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Name";
+            this.columnHeader2.Width = 140;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 749);
-            //this.Controls.Add(this.groupBoxSentMsgHUY);
+            this.Controls.Add(this.listViewTestCases);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -2256,9 +2279,16 @@
         private System.Windows.Forms.Label laBaudrate;
         private System.Windows.Forms.CheckBox chbCanFD;
         private System.Windows.Forms.NumericUpDown nudDelay;
-//        private System.Windows.Forms.GroupBox groupBoxSentMsg;
-//        private System.Windows.Forms.Button SentCANBtn;
-//        private System.Windows.Forms.Button AddMsgBtn;
+        private System.Windows.Forms.ListView listViewTestCases;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        //        private System.Windows.Forms.GroupBox groupBoxSentMsg;
+        //        private System.Windows.Forms.Button SentCANBtn;
+        //        private System.Windows.Forms.Button AddMsgBtn;
         //private System.Windows.Forms.TextBox ByteCAN1;
         //private System.Windows.Forms.TextBox ByteCAN8;
         //private System.Windows.Forms.TextBox ByteCAN7;

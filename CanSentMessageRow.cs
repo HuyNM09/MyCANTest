@@ -195,3 +195,5 @@ public class CanSendMessageRow
         OnSendClicked?.Invoke(data);
     }
 }
+
+

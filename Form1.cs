@@ -15,6 +15,7 @@ using TPCANHandle = System.UInt16;
 using TPCANBitrateFD = System.String;
 using TPCANTimestampFD = System.UInt64;
 using static System.Net.Mime.MediaTypeNames;
+using PCANBasicExample;
 
 namespace ICDIBasic
 {
@@ -758,25 +759,127 @@ namespace ICDIBasic
             // Thêm dòng đầu tiên
             AddMessageRow();
 
+            InitGroupExplorer();
+
             // Initializes specific components
-            //
             InitializeBasicComponents();
         }
+
+        /// <summary>
+        /// Tạo và hiển thị GroupBox chứa các group CAN
+        /// </summary>
+
+        //private ListTestCasesExplorer groupExplorer;
+
+        private class ListTestNames
+        {
+            public string Number { get; set; }
+            public string Name { get; set; }
+
+            public ListTestNames(string number, string name)
+            {
+                Number = number;
+                Name = name;
+            }
+
+        }                     // Cột 2
+        private void InitGroupExplorer()
+        {
+            List<ListTestNames> testCases = new List<ListTestNames>
+            {
+                new ListTestNames("001", "Engine Start Check"),
+                new ListTestNames("002", "Brake Pressure Check"),
+                new ListTestNames("003", "Airbag Readiness"),
+                new ListTestNames("001", "Engine Start Check"),
+                new ListTestNames("002", "Brake Pressure Check"),
+                new ListTestNames("003", "Airbag Readiness"),
+                new ListTestNames("001", "Engine Start Check"),
+                new ListTestNames("002", "Brake Pressure Check"),
+                new ListTestNames("003", "Airbag Readiness"),
+                new ListTestNames("001", "Engine Start Check"),
+                new ListTestNames("002", "Brake Pressure Check"),
+                new ListTestNames("003", "Airbag Readiness"),
+                new ListTestNames("001", "Engine Start Check"),
+                new ListTestNames("002", "Brake Pressure Check"),
+                new ListTestNames("003", "Airbag Readiness"),
+                new ListTestNames("001", "Engine Start Check"),
+                new ListTestNames("002", "Brake Pressure Check"),
+                new ListTestNames("003", "Airbag Readiness"),
+                new ListTestNames("001", "Engine Start Check"),
+                new ListTestNames("002", "Brake Pressure Check"),
+                new ListTestNames("003", "Airbag Readiness"),
+                new ListTestNames("001", "Engine Start Check"),
+                new ListTestNames("002", "Brake Pressure Check"),
+                new ListTestNames("003", "Airbag Readiness"),
+                new ListTestNames("001", "Engine Start Check"),
+                new ListTestNames("002", "Brake Pressure Check"),
+                new ListTestNames("003", "Airbag Readiness"),
+            };
+
+            listViewTestCases.Items.Clear();
+
+            foreach (var test in testCases)
+            {
+                var item = new ListViewItem(test.Number);
+                item.SubItems.Add(test.Name);
+                listViewTestCases.Items.Add(item);
+            }
+            this.listViewTestCases.ItemSelectionChanged += ListViewTestCases_ItemSelectionChanged;
+
+            //ListTestNames testCaseInfor = new ListTestNames("001", "Engine Start Check");
+
+            //ListViewItem item = new ListViewItem(testCaseInfor.Number);        // Cột 1
+            //item.SubItems.Add(testCaseInfor.Name);                             // Cột 2
+
+            //listViewTestCases.Items.Add(item);
+
+            //groupExplorer = new ListTestCasesExplorer
+            //{
+            //    Location = new Point(10, 350)
+            //};
+
+            //groupExplorer.LoadGroups(new List<string>
+            //{
+            //    "EngineControl",
+            //    "BrakeSystem",
+            //    "AirbagModule",
+            //    "BatteryStatus"
+            //});
+
+            //groupExplorer.OnGroupClicked += group =>
+            //{
+            //    MessageBox.Show($"Bạn đã chọn group: {group}", "Thông báo");
+            //};
+
+            //this.Controls.Add(groupExplorer);
+        }
+        private void ListViewTestCases_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                string number = e.Item.SubItems[0].Text;
+                string name = e.Item.SubItems[1].Text;
+
+                MessageBox.Show($"Bạn đã chọn test case:\nNo: {number}\nName: {name}", "Thông báo");
+            }
+        }
+
+        //=====================================Handle send msg START==================================
         private Button AddMsgBtn;
         private List<CanSendMessageRow> messageRows = new List<CanSendMessageRow>();
         private int nextY = 20;
-        private System.Windows.Forms.GroupBox groupBoxSentMsgHUY;
+        private System.Windows.Forms.GroupBox groupBoxSentMsg;
 
         private void CreateGroupBox()
         {
-            groupBoxSentMsgHUY = new GroupBox
+            groupBoxSentMsg = new GroupBox
             {
                 Text = "Sent message",
-                Location = new Point(10, 216),
+                Location = new Point(500, 216),
                 Size = new Size(630, 428),
                 Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
-            this.Controls.Add(groupBoxSentMsgHUY);
+            this.Controls.Add(groupBoxSentMsg);
 
             AddMsgBtn = new Button
             {
@@ -785,7 +888,7 @@ namespace ICDIBasic
                 Size = new Size(100, 30)
             };
             AddMsgBtn.Click += (s, e) => AddMessageRow();
-            groupBoxSentMsgHUY.Controls.Add(AddMsgBtn);
+            groupBoxSentMsg.Controls.Add(AddMsgBtn);
         }
 
         private void AddMessageRow()
@@ -793,13 +896,13 @@ namespace ICDIBasic
             var row = new CanSendMessageRow(new Point(10, nextY));
             row.OnSendClicked += ShowHexMessage;
             row.OnDeleteRequested += DeleteMessageRow; // NEW
-            groupBoxSentMsgHUY.Controls.Add(row.Container);
+            groupBoxSentMsg.Controls.Add(row.Container);
             messageRows.Add(row);
             nextY += 35;
         }
         private void DeleteMessageRow(CanSendMessageRow row)
         {
-            groupBoxSentMsgHUY.Controls.Remove(row.Container);
+            groupBoxSentMsg.Controls.Remove(row.Container);
             messageRows.Remove(row);
 
             // Re-layout lại các dòng còn lại
@@ -816,6 +919,9 @@ namespace ICDIBasic
             string hex = BitConverter.ToString(data.ToArray());
             MessageBox.Show($"Sending CAN Data: {hex}");
         }
+
+        //=====================================Handle send msg END=================================
+
         /// <summary>
         /// Form-Closing Function / Finish function
         /// </summary>
