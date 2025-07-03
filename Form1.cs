@@ -26,27 +26,50 @@ namespace ICDIBasic
         /// Message Status structure used to show CAN Messages
         /// in a ListView
         /// </summary>
+        /// <summary>
+        /// Lưu trạng thái của một CAN FD message đã nhận được
+        /// Bao gồm thông tin nội dung, số lần nhận, thời gian, và định dạng để hiển thị
+        /// </summary>
         private class MessageStatus
         {
+            // CAN message nhận được (dạng FD)
             private TPCANMsgFD m_Msg;
+
+            // Timestamp hiện tại (microsecond) tại lần nhận gần nhất
             private TPCANTimestampFD m_TimeStamp;
+
+            // Timestamp lần trước, dùng để tính khoảng thời gian giữa 2 lần nhận
             private TPCANTimestampFD m_oldTimeStamp;
+
+            // Vị trí index trong danh sách hiển thị (ListView hoặc ListBox)
             private int m_iIndex;
+
+            // Số lần message này được nhận (theo ID)
             private int m_Count;
+
+            // Cờ cho biết có hiển thị khoảng thời gian (period) hay tổng thời gian
             private bool m_bShowPeriod;
+
+            // Cờ báo hiệu message đã được cập nhật (để biết cần refresh trên UI)
             private bool m_bWasChanged;
 
+            /// <summary>
+            /// Khởi tạo thông tin ban đầu cho message
+            /// </summary>
             public MessageStatus(TPCANMsgFD canMsg, TPCANTimestampFD canTimestamp, int listIndex)
             {
                 m_Msg = canMsg;
                 m_TimeStamp = canTimestamp;
                 m_oldTimeStamp = canTimestamp;
                 m_iIndex = listIndex;
-                m_Count = 1;
+                m_Count = 1; // Bắt đầu với 1 lần nhận
                 m_bShowPeriod = true;
                 m_bWasChanged = false;
             }
 
+            /// <summary>
+            /// Cập nhật thông tin khi nhận message mới cùng ID
+            /// </summary>
             public void Update(TPCANMsgFD canMsg, TPCANTimestampFD canTimestamp)
             {
                 m_Msg = canMsg;
@@ -56,44 +79,31 @@ namespace ICDIBasic
                 m_Count += 1;
             }
 
-            public TPCANMsgFD CANMsg
-            {
-                get { return m_Msg; }
-            }
+            // Trả về nội dung message CAN hiện tại
+            public TPCANMsgFD CANMsg => m_Msg;
 
-            public TPCANTimestampFD Timestamp
-            {
-                get { return m_TimeStamp; }
-            }
+            // Trả về timestamp hiện tại
+            public TPCANTimestampFD Timestamp => m_TimeStamp;
 
-            public int Position
-            {
-                get { return m_iIndex; }
-            }
+            // Trả về vị trí hiển thị trong danh sách
+            public int Position => m_iIndex;
 
-            public string TypeString
-            {
-                get { return GetMsgTypeString(); }
-            }
+            // Trả về chuỗi biểu diễn loại message (STD, EXT, RTR, FD, BRS, v.v.)
+            public string TypeString => GetMsgTypeString();
 
-            public string IdString
-            {
-                get { return GetIdString(); }
-            }
+            // Trả về chuỗi ID message (theo chuẩn STD/EXT)
+            public string IdString => GetIdString();
 
-            public string DataString
-            {
-                get { return GetDataString(); }
-            }
+            // Trả về chuỗi dữ liệu message (hex hoặc Remote Request)
+            public string DataString => GetDataString();
 
-            public int Count
-            {
-                get { return m_Count; }
-            }
+            // Trả về số lần message này đã được nhận
+            public int Count => m_Count;
 
+            // Cho biết có đang hiển thị khoảng thời gian hay không
             public bool ShowingPeriod
             {
-                get { return m_bShowPeriod; }
+                get => m_bShowPeriod;
                 set
                 {
                     if (m_bShowPeriod ^ value)
@@ -104,52 +114,65 @@ namespace ICDIBasic
                 }
             }
 
+            // Cho biết message đã thay đổi (cần update UI)
             public bool MarkedAsUpdated
             {
-                get { return m_bWasChanged; }
-                set { m_bWasChanged = value; }
+                get => m_bWasChanged;
+                set => m_bWasChanged = value;
             }
 
-            public string TimeString
-            {
-                get { return GetTimeString(); }
-            }
+            // Trả về chuỗi thời gian (tính bằng ms)
+            public string TimeString => GetTimeString();
 
+            /// <summary>
+            /// Tính chuỗi hiển thị thời gian (đơn vị: ms)
+            /// Nếu ShowPeriod = true thì là khoảng thời gian giữa 2 lần nhận
+            /// </summary>
             private string GetTimeString()
             {
-                double fTime;
+                double fTime = (m_TimeStamp / 1000.0); // Convert to milliseconds
 
-                fTime = (m_TimeStamp / 1000.0);
                 if (m_bShowPeriod)
-                    fTime -= (m_oldTimeStamp / 1000.0);
-                return fTime.ToString("F1");
+                    fTime -= (m_oldTimeStamp / 1000.0); // Khoảng cách giữa 2 lần nhận
+
+                return fTime.ToString("F1"); // Format 1 chữ số thập phân
             }
 
+            /// <summary>
+            /// Trả về chuỗi dữ liệu HEX (dựa vào DLC)
+            /// Nếu là message dạng Remote Request thì trả về "Remote Request"
+            /// </summary>
             private string GetDataString()
             {
-                string strTemp;
-
-                strTemp = "";
+                string strTemp = "";
 
                 if ((m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_RTR) == TPCANMessageType.PCAN_MESSAGE_RTR)
                     return "Remote Request";
                 else
-                    for (int i = 0; i < Form1.GetLengthFromDLC(m_Msg.DLC, (m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_FD) == 0); i++)
+                {
+                    // Lấy độ dài thực từ DLC, kiểm tra có phải CAN FD không
+                    int length = Form1.GetLengthFromDLC(m_Msg.DLC, (m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_FD) == 0);
+                    for (int i = 0; i < length; i++)
                         strTemp += string.Format("{0:X2} ", m_Msg.DATA[i]);
+                }
 
                 return strTemp;
             }
 
+            /// <summary>
+            /// Trả về chuỗi ID (theo chuẩn 3 ký tự hoặc 8 ký tự HEX)
+            /// </summary>
             private string GetIdString()
             {
-                // We format the ID of the message and show it
-                //
                 if ((m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_EXTENDED) == TPCANMessageType.PCAN_MESSAGE_EXTENDED)
-                    return string.Format("{0:X8}h", m_Msg.ID);
+                    return string.Format("{0:X8}h", m_Msg.ID); // Extended ID (29-bit)
                 else
-                    return string.Format("{0:X3}h", m_Msg.ID);
+                    return string.Format("{0:X3}h", m_Msg.ID); // Standard ID (11-bit)
             }
 
+            /// <summary>
+            /// Trả về loại message CAN dưới dạng chuỗi (STD/EXT, RTR, FD/BRS/ESI)
+            /// </summary>
             private string GetMsgTypeString()
             {
                 string strTemp;
@@ -161,21 +184,18 @@ namespace ICDIBasic
                 if ((m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_ERRFRAME) == TPCANMessageType.PCAN_MESSAGE_ERRFRAME)
                     return "ERROR";
 
-                if ((m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_EXTENDED) == TPCANMessageType.PCAN_MESSAGE_EXTENDED)
-                    strTemp = "EXT";
-                else
-                    strTemp = "STD";
+                // Xác định EXT hoặc STD
+                strTemp = (m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_EXTENDED) == TPCANMessageType.PCAN_MESSAGE_EXTENDED ? "EXT" : "STD";
 
+                // Kiểm tra RTR
                 if ((m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_RTR) == TPCANMessageType.PCAN_MESSAGE_RTR)
                     strTemp += isEcho ? "/RTR [ ECHO ]" : "/RTR";
                 else
                 {
+                    // Các flag đặc biệt cho FD
                     if ((int)m_Msg.MSGTYPE > (int)TPCANMessageType.PCAN_MESSAGE_EXTENDED)
                     {
-                        if(isEcho)
-                            strTemp += " [ ECHO";
-                        else
-                            strTemp += " [ ";
+                        strTemp += isEcho ? " [ ECHO" : " [";
                         if ((m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_FD) == TPCANMessageType.PCAN_MESSAGE_FD)
                             strTemp += " FD";
                         if ((m_Msg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_BRS) == TPCANMessageType.PCAN_MESSAGE_BRS)
@@ -188,8 +208,8 @@ namespace ICDIBasic
 
                 return strTemp;
             }
-
         }
+
         #endregion
 
         #region Delegates
@@ -533,172 +553,218 @@ namespace ICDIBasic
         /// <summary>
         /// Display CAN messages in the Message-ListView
         /// </summary>
+        /// <summary>
+        /// Cập nhật thông tin hiển thị cho các message CAN đã được đánh dấu là "đã thay đổi".
+        /// Dữ liệu được lấy từ danh sách `m_LastMsgsList` và cập nhật tương ứng trên `lstMessages` (ListView).
+        /// </summary>
         private void DisplayMessages()
         {
             ListViewItem lviCurrentItem;
 
+            // Khóa danh sách để đảm bảo thread-safe khi truy cập đa luồng
             lock (m_LastMsgsList.SyncRoot)
             {
+                // Duyệt từng message trong danh sách đã nhận
                 foreach (MessageStatus msgStatus in m_LastMsgsList)
                 {
-                    // Get the data to actualize
-                    //
+                    // Kiểm tra xem message này có được đánh dấu là đã cập nhật không
                     if (msgStatus.MarkedAsUpdated)
                     {
+                        // Đánh dấu lại là đã xử lý (không cần cập nhật nữa)
                         msgStatus.MarkedAsUpdated = false;
+
+                        // Lấy dòng tương ứng trong ListView theo vị trí (index)
                         lviCurrentItem = lstMessages.Items[msgStatus.Position];
 
-                        lviCurrentItem.SubItems[2].Text = GetLengthFromDLC(msgStatus.CANMsg.DLC, (msgStatus.CANMsg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_FD) == 0).ToString();
+                        // Cập nhật độ dài dữ liệu thực tế từ DLC (theo chuẩn CAN hoặc CAN FD)
+                        lviCurrentItem.SubItems[2].Text = GetLengthFromDLC(
+                            msgStatus.CANMsg.DLC,
+                            (msgStatus.CANMsg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_FD) == 0
+                        ).ToString();
+
+                        // Cập nhật số lần message này đã được nhận
                         lviCurrentItem.SubItems[3].Text = msgStatus.Count.ToString();
+
+                        // Cập nhật khoảng thời gian (ms) giữa 2 lần nhận hoặc tổng thời gian
                         lviCurrentItem.SubItems[4].Text = msgStatus.TimeString;
+
+                        // Cập nhật nội dung dữ liệu (HEX hoặc "Remote Request")
                         lviCurrentItem.SubItems[5].Text = msgStatus.DataString;
                     }
                 }
             }
         }
 
+
         /// <summary>
         /// Inserts a new entry for a new message in the Message-ListView
         /// </summary>
         /// <param name="newMsg">The messasge to be inserted</param>
         /// <param name="timeStamp">The Timesamp of the new message</param>
+        /// <summary>
+        /// Thêm một message CAN mới vào danh sách hiển thị (ListView) và danh sách theo dõi nội bộ.
+        /// </summary>
+        /// <param name="newMsg">Message CAN mới nhận</param>
+        /// <param name="timeStamp">Thời điểm nhận message</param>
         private void InsertMsgEntry(TPCANMsgFD newMsg, TPCANTimestampFD timeStamp)
         {
             MessageStatus msgStsCurrentMsg;
             ListViewItem lviCurrentItem;
 
+            // Đảm bảo thread-safe khi thêm vào danh sách chung (dùng từ nhiều thread)
             lock (m_LastMsgsList.SyncRoot)
             {
-                // We add this status in the last message list
-                //
+                // Tạo đối tượng MessageStatus để lưu thông tin message và thời gian
                 msgStsCurrentMsg = new MessageStatus(newMsg, timeStamp, lstMessages.Items.Count);
+
+                // Gán chế độ hiển thị thời gian (hiển thị period hay timestamp)
                 msgStsCurrentMsg.ShowingPeriod = chbShowPeriod.Checked;
+
+                // Thêm vào danh sách quản lý message nội bộ
                 m_LastMsgsList.Add(msgStsCurrentMsg);
 
-                // Add the new ListView Item with the Type of the message
-                //	
+                // ----------------- Hiển thị lên ListView -----------------
+
+                // Thêm dòng mới vào ListView, cột đầu là loại message (STD/EXT/FD...)
                 lviCurrentItem = lstMessages.Items.Add(msgStsCurrentMsg.TypeString);
-                // We set the ID of the message
-                //
+
+                // Cột ID
                 lviCurrentItem.SubItems.Add(msgStsCurrentMsg.IdString);
-                // We set the length of the Message
-                //
-                lviCurrentItem.SubItems.Add(GetLengthFromDLC(newMsg.DLC, (newMsg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_FD) == 0).ToString());
-                // we set the message count message (this is the First, so count is 1)            
-                //
+
+                // Cột độ dài dữ liệu (tính từ DLC theo chuẩn CAN hoặc CAN FD)
+                lviCurrentItem.SubItems.Add(
+                    GetLengthFromDLC(
+                        newMsg.DLC,
+                        (newMsg.MSGTYPE & TPCANMessageType.PCAN_MESSAGE_FD) == 0
+                    ).ToString()
+                );
+
+                // Cột số lần xuất hiện (mặc định lần đầu là 1)
                 lviCurrentItem.SubItems.Add(msgStsCurrentMsg.Count.ToString());
-                // Add time stamp information if needed
-                //
+
+                // Cột thời gian (timestamp hoặc period tùy mode)
                 lviCurrentItem.SubItems.Add(msgStsCurrentMsg.TimeString);
-                // We set the data of the message. 	
-                //
+
+                // Cột dữ liệu HEX (hoặc “Remote Request” nếu là RTR)
                 lviCurrentItem.SubItems.Add(msgStsCurrentMsg.DataString);
             }
         }
 
         /// <summary>
-        /// Processes a received message, in order to show it in the Message-ListView
+        /// Xử lý 1 message CAN mới nhận được:
+        /// - Nếu đã có ID+Type đó rồi thì chỉ cập nhật nội dung và đếm số lần nhận.
+        /// - Nếu là message mới thì thêm dòng mới vào ListView.
         /// </summary>
-        /// <param name="theMsg">The received PCAN-Basic message</param>
-        /// <returns>True if the message must be created, false if it must be modified</returns>
+        /// <param name="theMsg">Message CAN nhận được</param>
+        /// <param name="itsTimeStamp">Thời điểm nhận</param>
         private void ProcessMessage(TPCANMsgFD theMsg, TPCANTimestampFD itsTimeStamp)
         {
-            // We search if a message (Same ID and Type) is 
-            // already received or if this is a new message
-            //
+            // Duyệt danh sách message đã từng nhận để xem message hiện tại đã tồn tại chưa
             lock (m_LastMsgsList.SyncRoot)
             {
                 foreach (MessageStatus msg in m_LastMsgsList)
                 {
+                    // So sánh theo ID và loại message (STD/EXT/FD/RTR...)
                     if ((msg.CANMsg.ID == theMsg.ID) && (msg.CANMsg.MSGTYPE == theMsg.MSGTYPE))
                     {
-                        // Modify the message and exit
-                        //
+                        // Nếu đã tồn tại: cập nhật lại dữ liệu, timestamp, count
                         msg.Update(theMsg, itsTimeStamp);
                         return;
                     }
                 }
-                // Message not found. It will created
-                //
+
+                // Nếu chưa tồn tại: chèn mới vào danh sách
                 InsertMsgEntry(theMsg, itsTimeStamp);
             }
         }
 
         /// <summary>
-        /// Processes a received message, in order to show it in the Message-ListView
+        /// Chuyển đổi message kiểu cũ (TPCANMsg + TPCANTimestamp) sang kiểu mới (TPCANMsgFD + TPCANTimestampFD),
+        /// sau đó xử lý message bằng hàm ProcessMessage mới.
         /// </summary>
-        /// <param name="theMsg">The received PCAN-Basic message</param>
-        /// <returns>True if the message must be created, false if it must be modified</returns>
         private void ProcessMessage(TPCANMsg theMsg, TPCANTimestamp itsTimeStamp)
         {
             TPCANMsgFD newMsg;
             TPCANTimestampFD newTimestamp;
 
+            // Khởi tạo struct message mới (FD – Flexible Data Rate)
             newMsg = new TPCANMsgFD();
-            newMsg.DATA = new byte[64];
+            newMsg.DATA = new byte[64]; // FD hỗ trợ tới 64 byte dữ liệu
+
+            // Sao chép dữ liệu từ message cũ sang kiểu FD
             newMsg.ID = theMsg.ID;
-            newMsg.DLC = theMsg.LEN;
+            newMsg.DLC = theMsg.LEN; // Trong CAN tiêu chuẩn DLC là độ dài dữ liệu (0–8)
+
+            // Sao chép tối đa 8 byte dữ liệu (CAN thường chỉ có 8)
             for (int i = 0; i < ((theMsg.LEN > 8) ? 8 : theMsg.LEN); i++)
                 newMsg.DATA[i] = theMsg.DATA[i];
+
             newMsg.MSGTYPE = theMsg.MSGTYPE;
 
-            newTimestamp = itsTimeStamp.micros + (1000UL * itsTimeStamp.millis) + (0x100_000_000UL * 1000UL * itsTimeStamp.millis_overflow);
+            // Chuyển timestamp kiểu cũ sang timestamp kiểu mới (microseconds)
+            newTimestamp = itsTimeStamp.micros
+                         + (1000UL * itsTimeStamp.millis)
+                         + (0x100_000_000UL * 1000UL * itsTimeStamp.millis_overflow);
+
+            // Gọi lại ProcessMessage phiên bản FD
             ProcessMessage(newMsg, newTimestamp);
         }
-
         /// <summary>
-        /// Thread-Function used for reading PCAN-Basic messages
+        /// Hàm chạy trong luồng riêng để chờ nhận dữ liệu từ CAN.
+        /// Sử dụng Event-driven (đợi tín hiệu thay vì polling liên tục).
         /// </summary>
         private void CANReadThreadFunc()
         {
             UInt32 iBuffer;
             TPCANStatus stsResult;
 
+            // Lấy handle của Event (dạng Win32 handle) để dùng với PCAN
             iBuffer = Convert.ToUInt32(m_ReceiveEvent.SafeWaitHandle.DangerousGetHandle().ToInt32());
-            // Sets the handle of the Receive-Event.
-            //
+
+            // Gán handle này vào PCAN driver – để nó tự phát tín hiệu khi có data
             stsResult = PCANBasic.SetValue(m_PcanHandle, TPCANParameter.PCAN_RECEIVE_EVENT, ref iBuffer, sizeof(UInt32));
 
+            // Nếu có lỗi, hiển thị thông báo
             if (stsResult != TPCANStatus.PCAN_ERROR_OK)
             {
                 MessageBox.Show(GetFormatedError(stsResult), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // While this mode is selected
+            // Nếu chọn chế độ "Event-driven" thì vòng lặp chờ dữ liệu sẽ chạy
             while (rdbEvent.Checked)
             {
-                // Waiting for Receive-Event
-                // 
+                // Đợi event trong 50ms (WaitOne có timeout)
                 if (m_ReceiveEvent.WaitOne(50))
-                    // Process Receive-Event using .NET Invoke function
-                    // in order to interact with Winforms UI (calling the 
-                    // function ReadMessages)
-                    // 
+                {
+                    // Nếu có tín hiệu: dùng Invoke để gọi xử lý nhận dữ liệu trên UI thread
+                    // (do .NET yêu cầu thao tác UI phải chạy từ UI thread)
                     this.Invoke(m_ReadDelegate);
+                }
             }
         }
 
         /// <summary>
-        /// Function for reading messages on FD devices
+        /// Đọc 1 message từ PCAN (chuẩn FD) khi có tín hiệu từ event.
         /// </summary>
-        /// <returns>A TPCANStatus error code</returns>
+        /// <returns>Mã lỗi nếu có, hoặc OK nếu đọc thành công</returns>
         private TPCANStatus ReadMessageFD()
         {
             TPCANMsgFD CANMsg;
             TPCANTimestampFD CANTimeStamp;
             TPCANStatus stsResult;
 
-            // We execute the "Read" function of the PCANBasic                
-            //
+            // Gọi PCANBasic.ReadFD để đọc 1 message từ driver
             stsResult = PCANBasic.ReadFD(m_PcanHandle, out CANMsg, out CANTimeStamp);
+
+            // Nếu hàng đợi rỗng thì không làm gì, nếu có dữ liệu thì xử lý
             if (stsResult != TPCANStatus.PCAN_ERROR_QRCVEMPTY)
-                // We process the received message
-                //
+                // Gửi message này đến hàm xử lý (hiển thị ra ListView, v.v.)
                 ProcessMessage(CANMsg, CANTimeStamp);
 
             return stsResult;
         }
+
 
         /// <summary>
         /// Function for reading CAN messages on normal CAN devices
@@ -785,46 +851,34 @@ namespace ICDIBasic
         }                     // Cột 2
         private void InitGroupExplorer()
         {
-            List<ListTestNames> testCases = new List<ListTestNames>
-            {
-                new ListTestNames("001", "Engine Start Check"),
-                new ListTestNames("002", "Brake Pressure Check"),
-                new ListTestNames("003", "Airbag Readiness"),
-                new ListTestNames("001", "Engine Start Check"),
-                new ListTestNames("002", "Brake Pressure Check"),
-                new ListTestNames("003", "Airbag Readiness"),
-                new ListTestNames("001", "Engine Start Check"),
-                new ListTestNames("002", "Brake Pressure Check"),
-                new ListTestNames("003", "Airbag Readiness"),
-                new ListTestNames("001", "Engine Start Check"),
-                new ListTestNames("002", "Brake Pressure Check"),
-                new ListTestNames("003", "Airbag Readiness"),
-                new ListTestNames("001", "Engine Start Check"),
-                new ListTestNames("002", "Brake Pressure Check"),
-                new ListTestNames("003", "Airbag Readiness"),
-                new ListTestNames("001", "Engine Start Check"),
-                new ListTestNames("002", "Brake Pressure Check"),
-                new ListTestNames("003", "Airbag Readiness"),
-                new ListTestNames("001", "Engine Start Check"),
-                new ListTestNames("002", "Brake Pressure Check"),
-                new ListTestNames("003", "Airbag Readiness"),
-                new ListTestNames("001", "Engine Start Check"),
-                new ListTestNames("002", "Brake Pressure Check"),
-                new ListTestNames("003", "Airbag Readiness"),
-                new ListTestNames("001", "Engine Start Check"),
-                new ListTestNames("002", "Brake Pressure Check"),
-                new ListTestNames("003", "Airbag Readiness"),
-            };
+            //List<ListTestNames> testCases = new List<ListTestNames>
+            //{
+            //    new ListTestNames("001", "Engine Start Check"),
+            //    new ListTestNames("002", "Brake Pressure Check"),
+            //    new ListTestNames("003", "Airbag Readiness"),
+            //    new ListTestNames("004", "Engine Start Check"),
+            //    new ListTestNames("005", "Brake Pressure Check"),
+            //    new ListTestNames("006", "Airbag Readiness"),
+            //    new ListTestNames("007", "Engine Start Check"),
+            //    new ListTestNames("008", "Brake Pressure Check"),
+            //    new ListTestNames("009", "Airbag Readiness"),
+            //    new ListTestNames("010", "Engine Start Check"),
+            //    new ListTestNames("011", "Brake Pressure Check"),
+            //    new ListTestNames("012", "Airbag Readiness"),
+            //    new ListTestNames("013", "Engine Start Check"),
+            //    new ListTestNames("014", "Brake Pressure Check"),
+            //    new ListTestNames("015", "Airbag Readiness"),
+            //};
 
-            listViewTestCases.Items.Clear();
+            //listViewTestCases.Items.Clear();
 
-            foreach (var test in testCases)
-            {
-                var item = new ListViewItem(test.Number);
-                item.SubItems.Add(test.Name);
-                listViewTestCases.Items.Add(item);
-            }
-            this.listViewTestCases.ItemSelectionChanged += ListViewTestCases_ItemSelectionChanged;
+            //foreach (var test in testCases)
+            //{
+            //    var item = new ListViewItem(test.Number);
+            //    item.SubItems.Add(test.Name);
+            //    listViewTestCases.Items.Add(item);
+            //}
+            //this.listViewTestCases.ItemSelectionChanged += ListViewTestCases_ItemSelectionChanged;
 
             //ListTestNames testCaseInfor = new ListTestNames("001", "Engine Start Check");
 
@@ -863,6 +917,37 @@ namespace ICDIBasic
                 MessageBox.Show($"Bạn đã chọn test case:\nNo: {number}\nName: {name}", "Thông báo");
             }
         }
+
+        //=====================================Handle read file START==================================
+        private void btnLoadExcel_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Excel Files (*.xlsx)|*.xlsx";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        var testCases = ExcelTestCaseLoader.LoadTestCases(ofd.FileName);
+                        listViewTestCases.Items.Clear();
+
+                        foreach (var tc in testCases)
+                        {
+                            var item = new ListViewItem(tc.Id);
+                            item.SubItems.Add(tc.Name);
+                            listViewTestCases.Items.Add(item);
+                        }
+
+                        MessageBox.Show("Tải danh sách test case thành công!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi đọc file Excel: " + ex.Message);
+                    }
+                }
+            }
+        }
+        //=====================================Handle read file END==================================
 
         //=====================================Handle send msg START==================================
         private Button AddMsgBtn;

@@ -174,6 +174,7 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.loadFileBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudIdTo)).BeginInit();
@@ -2102,11 +2103,24 @@
             this.columnHeader2.Text = "Name";
             this.columnHeader2.Width = 140;
             // 
+            // loadFileBtn
+            // 
+            this.loadFileBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadFileBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.loadFileBtn.Location = new System.Drawing.Point(35, 205);
+            this.loadFileBtn.Name = "loadFileBtn";
+            this.loadFileBtn.Size = new System.Drawing.Size(65, 23);
+            this.loadFileBtn.TabIndex = 53;
+            this.loadFileBtn.Text = "LoadFile";
+            this.loadFileBtn.UseVisualStyleBackColor = true;
+            this.loadFileBtn.Click += new System.EventHandler(this.btnLoadExcel_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.Controls.Add(this.loadFileBtn);
             this.Controls.Add(this.listViewTestCases);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
@@ -2286,6 +2300,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.Button loadFileBtn;
         //        private System.Windows.Forms.GroupBox groupBoxSentMsg;
         //        private System.Windows.Forms.Button SentCANBtn;
         //        private System.Windows.Forms.Button AddMsgBtn;
