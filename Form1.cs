@@ -818,8 +818,13 @@ namespace ICDIBasic
             // Initializes Form's component
             //
             InitializeComponent();
-            // Set window to full screen
+            // Cho phép hiển thị full màn hình khi mở lên
             this.WindowState = FormWindowState.Maximized;
+
+            // Cho phép resize, minimize, maximize
+            this.FormBorderStyle = FormBorderStyle.Sizable; // Mặc định
+            this.MaximizeBox = true; // Có nút Maximize
+            this.MinimizeBox = true; // Có nút Minimize
 
             CreateGroupBox();
             // Thêm dòng đầu tiên

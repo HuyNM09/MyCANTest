@@ -745,7 +745,7 @@
             this.groupBox4.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBox4.Location = new System.Drawing.Point(8, 650);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(628, 87);
+            this.groupBox4.Size = new System.Drawing.Size(731, 87);
             this.groupBox4.TabIndex = 47;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Information";
@@ -755,7 +755,7 @@
             this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnReset.Enabled = false;
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnReset.Location = new System.Drawing.Point(557, 48);
+            this.btnReset.Location = new System.Drawing.Point(660, 48);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(65, 23);
             this.btnReset.TabIndex = 58;
@@ -768,7 +768,7 @@
             this.btnStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStatus.Enabled = false;
             this.btnStatus.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnStatus.Location = new System.Drawing.Point(486, 48);
+            this.btnStatus.Location = new System.Drawing.Point(589, 48);
             this.btnStatus.Name = "btnStatus";
             this.btnStatus.Size = new System.Drawing.Size(65, 23);
             this.btnStatus.TabIndex = 57;
@@ -781,7 +781,7 @@
             this.btnGetVersions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGetVersions.Enabled = false;
             this.btnGetVersions.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnGetVersions.Location = new System.Drawing.Point(486, 19);
+            this.btnGetVersions.Location = new System.Drawing.Point(589, 19);
             this.btnGetVersions.Name = "btnGetVersions";
             this.btnGetVersions.Size = new System.Drawing.Size(65, 23);
             this.btnGetVersions.TabIndex = 53;
@@ -809,7 +809,7 @@
             // 
             this.btnInfoClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInfoClear.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnInfoClear.Location = new System.Drawing.Point(557, 19);
+            this.btnInfoClear.Location = new System.Drawing.Point(660, 19);
             this.btnInfoClear.Name = "btnInfoClear";
             this.btnInfoClear.Size = new System.Drawing.Size(65, 23);
             this.btnInfoClear.TabIndex = 52;
@@ -828,7 +828,7 @@
             this.groupBox5.Controls.Add(this.rdbTimer);
             this.groupBox5.Controls.Add(this.btnRead);
             this.groupBox5.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.groupBox5.Location = new System.Drawing.Point(644, 15);
+            this.groupBox5.Location = new System.Drawing.Point(747, 15);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(714, 387);
             this.groupBox5.TabIndex = 48;
@@ -1038,7 +1038,7 @@
             this.groupBox6.Controls.Add(this.txtData0);
             this.groupBox6.Controls.Add(this.nudLength);
             this.groupBox6.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.groupBox6.Location = new System.Drawing.Point(644, 408);
+            this.groupBox6.Location = new System.Drawing.Point(747, 408);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(714, 329);
             this.groupBox6.TabIndex = 51;
@@ -2107,7 +2107,7 @@
             // 
             this.loadFileBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.loadFileBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.loadFileBtn.Location = new System.Drawing.Point(35, 205);
+            this.loadFileBtn.Location = new System.Drawing.Point(138, 205);
             this.loadFileBtn.Name = "loadFileBtn";
             this.loadFileBtn.Size = new System.Drawing.Size(65, 23);
             this.loadFileBtn.TabIndex = 53;
@@ -2119,7 +2119,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.ClientSize = new System.Drawing.Size(1473, 749);
             this.Controls.Add(this.loadFileBtn);
             this.Controls.Add(this.listViewTestCases);
             this.Controls.Add(this.groupBox6);
